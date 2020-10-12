@@ -1,19 +1,25 @@
-NAME = weaveworksdemos/payment
-INSTANCE = payment
+up: build run
 
-.PHONY: default copy test
+build:
 
-default: test
+	docker build -t payment .
 
-copy:
-	docker create --name $(INSTANCE) $(NAME)-dev
-	docker cp $(INSTANCE):/app/main $(shell pwd)/app
-	docker rm $(INSTANCE)
+run:
 
-release:
-	docker build -t $(NAME) -f ./docker/payment/Dockerfile-release .
+	docker run -it --name payment -p 8082:80 -d payment
 
-test:
-	GROUP=weaveworksdemos COMMIT=$(COMMIT) ./scripts/build.sh
-	./test/test.sh unit.py
-	./test/test.sh container.py --tag $(COMMIT)
+check:
+
+	curl http://localhost:8082/health
+
+exec:
+
+	docker exec -it payment sh
+
+stop:
+
+	docker stop payment
+
+clean:
+	
+	docker rm -f payment 
