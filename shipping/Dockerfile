@@ -7,6 +7,8 @@ copy pom.xml /tmp/
 
 run --mount=type=cache,id=maven,target=/root/.m2,sharing=shared mvn clean package
 
+expose 80 
+
 from adoptopenjdk/openjdk11:alpine
 
 COPY --from=build /tmp/target/shipping.jar /shipping.jar

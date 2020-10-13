@@ -2,11 +2,11 @@ up: build run
 
 build:
 
-	docker build -t payment .
+	docker build -t renadbkl/payment .
 
 run:
 
-	docker run -it --name payment -p 8082:80 -d payment
+	docker run -it --name payment -p 8082:80 -d renadbkl/payment
 
 check:
 
@@ -14,7 +14,7 @@ check:
 
 exec:
 
-	docker exec -it payment sh
+	docker exec -it renadbkl/payment sh
 
 stop:
 
