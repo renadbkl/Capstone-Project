@@ -1,6 +1,6 @@
 build:
 
-        docker build -t renadbkl/catalogue .
+        docker build -t renadbkl/catalogue-db .
 
 run:
 
