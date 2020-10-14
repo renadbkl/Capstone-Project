@@ -1,6 +1,6 @@
 import base64
 
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 from random import randint, choice
 
 
@@ -24,7 +24,7 @@ class WebTasks(TaskSet):
         self.client.post("/orders")
 
 
-class Web(HttpLocust):
+class Web(HttpUser):
     task_set = WebTasks
     min_wait = 0
     max_wait = 0

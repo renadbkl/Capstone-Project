@@ -4,4 +4,4 @@ build:
 
 run:
 
-	docker run -it --name user-db -p 80:80 -d renadbkl/user-db
+	docker run -it --name user-db -d renadbkl/user-db

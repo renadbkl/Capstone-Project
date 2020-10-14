@@ -4,7 +4,7 @@ build:
 
 run:
 
-	docker run -it --name user -p 80:80 -d renadbkl/user
+	docker run -it --name user -d renadbkl/user
 
 check:
 

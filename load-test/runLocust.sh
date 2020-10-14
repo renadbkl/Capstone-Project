@@ -14,7 +14,7 @@ REQUESTS=10
 
 do_check() {
 
-  # check hostname is not empty
+   #check hostname is not empty
   if [ "${TARGET_HOST}x" == "x" ]; then
     echo "TARGET_HOST is not set; use '-h hostname:port'"
     exit 1
