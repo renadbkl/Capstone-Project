@@ -1,4 +1,4 @@
-FROM weaveworksdemos/msd-java:jre-latest
+FROM weaveworksdemos/msd-java:latest
 
 WORKDIR /usr/src/app
 COPY *.jar ./app.jar
@@ -11,7 +11,7 @@ ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG COMMIT
 
-LABEL org.label-schema.vendor="renadbkl" \
+LABEL org.label-schema.vendor="Weaveworks" \
   org.label-schema.build-date="${BUILD_DATE}" \
   org.label-schema.version="${BUILD_VERSION}" \
   org.label-schema.name="Socks Shop: Cart" \
@@ -21,4 +21,5 @@ LABEL org.label-schema.vendor="renadbkl" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
 
+ENV JAVA_OPTS "-Djava.security.egd=file:/dev/urandom"
 ENTRYPOINT ["/usr/local/bin/java.sh","-jar","./app.jar", "--port=80"]

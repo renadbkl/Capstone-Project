@@ -1,16 +1,11 @@
-FROM java:openjdk-8-alpine
-
-WORKDIR /usr/src/app
-COPY ./target/*.jar ./app.jar
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","./app.jar", "--port=80"]
+FROM maven:3-jdk-8 AS build
+WORKDIR /carts
+COPY . /carts
+RUN mvn clean package
 
 FROM weaveworksdemos/msd-java:jre-latest
-
-WORKDIR /usr/src/app
-COPY *.jar ./app.jar
-
-RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
+COPY --from=build /carts/target/*.jar ./app.jar
+RUN     chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
 
 USER ${SERVICE_USER}
 
@@ -27,5 +22,4 @@ LABEL org.label-schema.vendor="Weaveworks" \
   org.label-schema.vcs-url="github.com:microservices-demo/carts.git" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
-
-ENTRYPOINT ["/usr/local/bin/java.sh","-jar","./app.jar", "--port=80"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","./app.jar", "--port=80"]
