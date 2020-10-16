@@ -1,2 +1,4 @@
 __pycache__/
 coverage.out
+
+docker-secret.yaml

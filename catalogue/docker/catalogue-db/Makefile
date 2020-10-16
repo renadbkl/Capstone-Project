@@ -1,7 +1,8 @@
 build:
-
-        docker build -t renadbkl/catalogue-db .
+	docker build -t renadbkl/catalogue-db .
 
 run:
+	docker run -it --name catalogue-db -p 3306:80 -d renadbkl/catalogue-db
 
-        docker run -it --name catalogue -d renadbkl/catalogue
+curl:
+	curl http://localhost:3306/catalogue-db
