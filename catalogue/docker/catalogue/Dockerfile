@@ -1,7 +1,7 @@
 FROM golang:1.7
 
-COPY . /go/src/github.com/microservices-demo/catalogue
-WORKDIR /go/src/github.com/microservices-demo/catalogue
+COPY . .
+WORKDIR .
 
 RUN go get -u github.com/FiloSottile/gvt
 RUN gvt restore && \
