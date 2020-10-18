@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: sock-front-end
+  namespace: test
+spec:
+  type: git
+  params:
+    - name: revision
+      value: Master
+    - name: url
+      value: https://github.com/renadbkl/level-3-project.git
