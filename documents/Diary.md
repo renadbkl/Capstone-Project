@@ -11,8 +11,6 @@ I had a problem with some of the microservises because the version is not update
 and also i had a problem runnig load-test and i had to specify the host number aka the pivate ip in the docker run command to make it work.
  and finally all the microservices worked locally. and i pushed all the images
 
-Day 4:
-
-
-
-
+Day 4,5:
+i fixed user-db dockerfile and i created docker secrets installed tekton and i made sa, pipline resource, task, taskrunner files and i had this error " Error running git [submodule init]" because there is
+another reposetory inside mine and it has .git folder so i deleted it then finally the taskrun succeed for front-end microservice
