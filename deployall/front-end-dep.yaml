@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: front-end
-          image: renadbl/front-end
+          image: renadbkl/front-end
           resources:
           ports:
             - containerPort: 8079
@@ -24,15 +24,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalogue
+  name: front-end
   labels:
-    name: catalogue
+    name: front-end
   namespace: sock-shop
 spec:
+  type: LoadBalancer
   ports:
-    # the port that this service should serve on
   - port: 80
-    targetPort: 80
+    targetPort: 8079
+    nodePort: 30001
   selector:
-    name: catalogue
+    name: front-end
 

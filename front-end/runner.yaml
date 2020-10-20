@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: front-end-taskrun
+  namespace: sock-shop
+spec:
+  serviceAccountName: tekton-sa
+  taskRef:
+    name: sock-front-end-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/front-end"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r
