@@ -1,4 +1,3 @@
-
 FROM golang:1.7-alpine
 
 COPY . /go/src/github.com/microservices-demo/user/

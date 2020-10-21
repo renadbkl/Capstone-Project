@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: orders-taskrun
+  namespace: sock-shop
+spec:
+  serviceAccountName: tekton-sa-orders
+  taskRef:
+    name: sock-orders-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/orders"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-orders
