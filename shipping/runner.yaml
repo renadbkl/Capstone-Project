@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: shipping-taskrun
+  namespace: sock-shop
+spec:
+  serviceAccountName: tekton-sa-shipping
+  taskRef:
+    name: sock-front-end-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/shipping"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-shipping

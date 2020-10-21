@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: carts-taskrun
+  namespace: sock-shop
+spec:
+  serviceAccountName: tekton-sa-carts
+  taskRef:
+    name: sock-carts-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/carts"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-carts
