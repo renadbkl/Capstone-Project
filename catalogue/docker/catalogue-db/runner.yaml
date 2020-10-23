@@ -2,7 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
   name: catalogue-db-taskrun
-  namespace: sock-shop
+  namespace: test
 spec:
   serviceAccountName: tekton-sa
   taskRef:
