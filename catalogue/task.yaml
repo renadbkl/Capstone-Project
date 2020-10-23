@@ -2,7 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: sock-catalogue-task
-  namespace: sock-shop
+  namespace: test
 spec:
   resources:
     inputs:
