@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: queue-master-taskrun
+  namespace: test
+spec:
+  serviceAccountName: tekton-sa
+  taskRef:
+    name: sock-queue-master-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/queue-master"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-qm

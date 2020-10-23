@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: user-taskrun
+  namespace: test
+spec:
+  serviceAccountName: tekton-sa
+  taskRef:
+    name: sock-user-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/user"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-user
