@@ -4,15 +4,17 @@ kind: Deployment
 metadata:
   name: front-end
   namespace: test
+  labels:
+    name: front-end
 spec:
   replicas: 1
   selector: 
     matchLabels:
-      n : front-end
+      name: front-end
   template:
     metadata:
       labels:
-        n : front-end
+        name: front-end
     spec:
       containers:
         - name: front-end

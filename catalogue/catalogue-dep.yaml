@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: renadbkl/front-end
+        image: renadbkl/catalogue
         command: ["/app"]
         args:
         - -port=80
