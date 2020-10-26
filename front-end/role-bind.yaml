@@ -1,0 +1,22 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: sock-shop-role
+rules:
+- apiGroups: ["serving.knative.dev", "apps", "", "extensions"]
+  resources: ["services", "deployments", "deployments.apps", "replicasets", "pods", "ingresses"]
+  verbs: ["get", "create", "update", "patch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sock-shop-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sock-shop-role
+subjects:
+- kind: ServiceAccount
+  name: sock-shop
