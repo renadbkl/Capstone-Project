@@ -4,7 +4,7 @@ metadata:
   name: queue-master-taskrun
   namespace: test
 spec:
-  serviceAccountName: tekton-sa
+  serviceAccountName: tekton-sa-queue-master
   taskRef:
     name: sock-queue-master-task
   params:
