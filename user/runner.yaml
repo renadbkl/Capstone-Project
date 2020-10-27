@@ -4,7 +4,7 @@ metadata:
   name: user-taskrun
   namespace: test
 spec:
-  serviceAccountName: tekton-sa
+  serviceAccountName: tekton-sa-user
   taskRef:
     name: sock-user-task
   params:
