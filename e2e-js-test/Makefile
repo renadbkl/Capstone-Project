@@ -9,6 +9,9 @@ test:
 itest:
 	docker run -it --rm -v "$$(pwd)":/app -w /app node4 casperjs test *_test.js
 
+runtest:
+	docker run -it --rm -v "$$(pwd)":/app -w /app node4 casperjs test homepage_test.js login_test.js catalogue_test.js cart_test.js checkout_test.js
+
 init:
 	docker run -it --rm -v "$$(pwd)":/app -w /app node4 npm init
 
