@@ -1,11 +1,16 @@
-FROM maven:3-jdk-8 AS build
-WORKDIR /carts
-COPY . /carts
-RUN mvn clean package
+FROM maven:3-jdk-8 as build
+WORKDIR /tmp
 
-FROM weaveworksdemos/msd-java:jre-latest
-COPY --from=build /carts/target/*.jar ./app.jar
-RUN     chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
+copy src /tmp/src
+copy pom.xml /tmp/
+
+run mvn clean package
+
+from adoptopenjdk/openjdk8:alpine
+
+COPY --from=build /tmp/target/carts.jar /carts.jar
+
+run chmod a+rx ./carts.jar
 
 USER ${SERVICE_USER}
 
@@ -22,4 +27,4 @@ LABEL org.label-schema.vendor="Weaveworks" \
   org.label-schema.vcs-url="github.com:microservices-demo/carts.git" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","./app.jar", "--port=80"]
+ENTRYPOINT ["/opt/java/openjdk/bin/java","-jar","./carts.jar", "--port=80"]
