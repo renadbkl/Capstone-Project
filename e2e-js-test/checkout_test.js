@@ -6,17 +6,18 @@
 
   casper.test.begin("User buys some socks", 5, function(test) {
     // initial load and login
-    casper.start("http://front-end:8080/", function() {
+    casper.start("http://15.185.200.129:30001", function() {
+      test.assertNotVisible("#login-modal", "user does not see the login dialogue");
+
       this.clickLabel("Login");
-      this.fill("#login-modal form", {
-        "username": "Eve_Berger",
-        "password": "duis"
-      }, true);
-      this.click("#login-modal form button.btn.btn-primary");
-      this.waitForText("Logged in", function() {
-        test.comment("user logged in");
+      casper.waitUntilVisible("#login-modal", function() {
+        test.assertVisible("#login-modal", "user is presented with the login dialogue");
+        this.fill("#login-modal form", {
+          "username": "Eve_Berger",
+          "password": "eve"
+        }, false);
       }, function() {
-        test.fail("login failed");
+        test.fail("login dialogue never showed up");
       }, 3000);
     });
 

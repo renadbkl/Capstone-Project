@@ -1,18 +1,20 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shipping
   labels:
-    name: shipping
+    app: shipping
+  namespace: test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: shipping
+      app: shipping
   template:
     metadata:
       labels:
-        name: shipping
+        app: shipping
     spec:
       containers:
       - name: shipping
@@ -31,6 +33,15 @@ spec:
             memory: 500Mi
         ports:
         - containerPort: 80
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+            add:
+              - NET_BIND_SERVICE
+          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
