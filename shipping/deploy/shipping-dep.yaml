@@ -5,7 +5,6 @@ metadata:
   name: shipping
   labels:
     app: shipping
-  namespace: test
 spec:
   replicas: 1
   selector:
