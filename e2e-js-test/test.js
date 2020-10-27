@@ -150,7 +150,7 @@
           });
 
           app.use(function(_req, _res) {
-            helpers.simpleHttpRequest("http://api.example.org/users", _res, done);
+            helpers.simpleHttpRequest("http://15.185.218.100/user", _res, done);
           });
 
           chai.
