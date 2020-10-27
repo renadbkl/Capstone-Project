@@ -10,7 +10,7 @@ cluster-down:
 clean: logs
 	
 cluster-up:
-	k3d cluster create socks \
+	k3d cluster create labs \
 	    -p 80:80@loadbalancer \
 	    -p 443:443@loadbalancer \
 	    -p 30000-32767:30000-32767@server[0] \
