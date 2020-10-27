@@ -6,6 +6,9 @@ build:
 test:
 	docker run -it --rm -v "$$(pwd)":/app -w /app node4 mocha test.js
 
+itest:
+	docker run -it --rm -v "$$(pwd)":/app -w /app node4 casperjs test *_test.js
+
 init:
 	docker run -it --rm -v "$$(pwd)":/app -w /app node4 npm init
 

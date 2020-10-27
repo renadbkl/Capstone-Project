@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:experimental
 FROM maven:3-jdk-11 as build
 WORKDIR /tmp
 
