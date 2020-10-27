@@ -6,10 +6,10 @@ metadata:
   labels:
     name: carts
 spec:
-  replicas: 1
-  selector: 
+  selector:
     matchLabels:
       name: carts
+  replicas: 1
   template:
     metadata:
       labels:
@@ -31,7 +31,6 @@ spec:
             cpu: 300m
             memory: 500Mi
         ports:
-        - containerPort: 80
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
