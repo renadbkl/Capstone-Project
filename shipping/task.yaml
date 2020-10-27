@@ -52,7 +52,7 @@ spec:
     - -images=[{"name":"$(params.IMAGE)","type":"image","url":"$(params.IMAGE)","digest":"","OutputImageDir":"$(workspaces.source.path)/image-digest"}]
     - -terminationMessagePath=image-digested
   - name: digest-to-results
-    workingDir: /workspace/level-3-project/front-end
+    workingDir: /workspace/level-3-project/shipping
 
     image: stedolan/jq
     script: |
