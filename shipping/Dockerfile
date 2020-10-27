@@ -1,12 +1,11 @@
+# syntax=docker/dockerfile:experimental
 FROM maven:3-jdk-11 as build
 WORKDIR /tmp
 
 copy src /tmp/src
 copy pom.xml /tmp/
 
-run --mount=type=cache,id=maven,target=/root/.m2,sharing=shared mvn clean package
-
-expose 80 
+run mvn clean package
 
 from adoptopenjdk/openjdk11:alpine
 

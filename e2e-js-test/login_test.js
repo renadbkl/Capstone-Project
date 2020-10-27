@@ -11,7 +11,7 @@
       casper.waitUntilVisible("#login-modal", function() {
         test.assertVisible("#login-modal", "user is presented with the login dialogue");
         this.fill("#login-modal form", {
-          "username": "Eve_Berger",
+          "username": "renad",
           "password": "duis"
         }, false);
       }, function() {
@@ -21,7 +21,7 @@
 
     casper.then(function() {
       this.click("#login-modal form button.btn.btn-primary");
-      this.waitForText("Logged in as Eve Berger", function() {
+      this.waitForText("Logged in as renad", function() {
         test.pass("user is logged in");
       }, function() {
         test.fail("user login failed");
