@@ -8,7 +8,7 @@
       this.clickLabel("Login");
       this.fill("#login-modal form", {
         "username": "Eve_Berger",
-        "password": "duis"
+        "password": "eve"
       }, true);
       this.click("#login-modal form button.btn.btn-primary");
       this.waitForText("Logged in", function() {
