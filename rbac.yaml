@@ -1,15 +1,13 @@
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: tekton-sa-orders
-  namespace: test
-secrets:
-  - name: basic-user-pass-docker
+  name: sock-shop-sa
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: orders-role
+  name: sock-shop-role
 rules:
 - apiGroups: ["", "extensions", "apps"]
   resources: ["services","secrets","deployments", "deployments.apps", "replicasets", "pods"]
@@ -18,11 +16,11 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: orders-rolebinding
+  name: sock-shop-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: orders-role
+  name: sock-shop-role
 subjects:
   - kind: ServiceAccount
-    name: tekton-sa-orders
+    name: sock-shop-sa 

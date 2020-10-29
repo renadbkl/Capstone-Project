@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: ete-taskrun
+  namespace: test
+spec:
+  serviceAccountName: tekton-sa-ete
+  taskRef:
+    name: sock-ete-task
+  params:
+  - name: IMAGE
+    value: "renadbkl/ete-js-test"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-ete

@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-user-taskrun
+spec:
+  serviceAccountName: tekton-sa-user
+  taskRef:
+    name: deploy-user-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r

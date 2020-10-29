@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-carts-taskrun
+spec:
+  serviceAccountName: tekton-sa-carts
+  taskRef:
+    name: deploy-carts-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-carts

@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-catalogue-taskrun
+spec:
+  serviceAccountName: tekton-sa-catalogue
+  taskRef:
+    name: deploy-catalogue-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r

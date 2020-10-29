@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-payment-taskrun
+spec:
+  serviceAccountName: tekton-sa-payment
+  taskRef:
+    name: deploy-payment-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r
