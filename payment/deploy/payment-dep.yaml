@@ -5,6 +5,7 @@ metadata:
   name: payment
   labels:
     name: payment
+    namespace: test
 spec:
   replicas: 1
   selector: 
@@ -41,3 +42,17 @@ spec:
           periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+  labels:
+    name: payment
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 80
+  selector:
+    name: payment

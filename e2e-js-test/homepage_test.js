@@ -9,7 +9,7 @@
       test.assertTextExists("Login", "login link is present");
       test.assertNotVisible("ul.menu li.howdy", "user is not logged in");
       test.assertTextExists("0 items in cart", "cart is empty");
-      test.assertTextExists("Buy 1000 socks, get a shoe for free!", "user is presented with the offer of the day");
+      test.assertTextExists("get a shoe for free!", "user is presented with the offer of the day");
     });
 
     casper.run(function() {

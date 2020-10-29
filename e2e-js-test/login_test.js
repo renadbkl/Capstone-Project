@@ -1,6 +1,5 @@
 (function (){
   'use strict';
-
   require("./config");
 
   casper.test.begin("User logs in", 3, function suite(test) {
@@ -21,7 +20,7 @@
 
     casper.then(function() {
       this.click("#login-modal form button.btn.btn-primary");
-      this.waitForText("Logged in as Eve Berger"", function() {
+      this.waitForText("Logged in as Eve Berger", function() {
         test.pass("user is logged in");
       }, function() {
         test.fail("user login failed");

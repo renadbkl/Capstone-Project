@@ -1,13 +1,12 @@
- 
 (function (){
   'use strict';
   require("./config");
 
   var __utils__ = require("clientutils").create();
 
-  casper.test.begin("User buys some socks", 7, function(test) {
+  casper.test.begin("User buys some socks", 5, function(test) {
     // initial load and login
-    casper.start("http://15.185.200.129:30001", function() {
+    casper.start("http://15.185.218.100:30001", function() {
       test.assertNotVisible("#login-modal", "user does not see the login dialogue");
       this.clickLabel("Login");
       casper.waitUntilVisible("#login-modal", function() {
@@ -15,7 +14,7 @@
       this.fill("#login-modal form", {
         "username": "Eve_Berger",
         "password": "eve"
-      }, false);
+      }, true);
       }, function() {
         test.fail("login dialogue never showed up");
       }, 3000);
