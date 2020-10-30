@@ -11,8 +11,8 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: front-end-role
 rules:
-- apiGroups: ["", "extensions", "apps"]
-  resources: ["services","secrets","deployments", "deployments.apps", "replicasets", "pods"]
+- apiGroups: ["", "extensions", "apps", "networking.k8s.io"]
+  resources: ["services","secrets","deployments", "deployments.apps", "replicasets", "pods", "ingresses"]
   verbs: ["*"]
 ---
 kind: RoleBinding
