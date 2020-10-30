@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-queue-master-taskrun
+spec:
+  serviceAccountName: tekton-sa-queue-master
+  taskRef:
+    name: deploy-queue-master-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-queue-master
