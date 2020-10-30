@@ -11,6 +11,7 @@ spec:
   params:
   - name: IMAGE
     description: Name (reference) of the image to build.
+    default: renadbkl/shipping
   - name: DOCKERFILE
     description: Path to the Dockerfile to build.
     default: /workspace/level-3-project/shipping/Dockerfile
