@@ -1,0 +1,4 @@
+Monitoring: delete-prometheus
+Monitoring: delete-grafana
+Monitoring: install-grafana
+Monitoring: install-grafana
