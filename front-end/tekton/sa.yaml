@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: tekton-sa-carts-db
+  name: tekton-sa-front-end
   namespace: prod
 secrets:
   - name: basic-user-pass-docker
@@ -9,20 +9,20 @@ secrets:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: carts-db-role
+  name: front-end-role
 rules:
-- apiGroups: ["", "extensions", "apps"]
-  resources: ["services","secrets","deployments", "deployments.apps", "replicasets", "pods"]
+- apiGroups: ["", "extensions", "apps", "networking.k8s.io"]
+  resources: ["services","secrets","deployments", "deployments.apps", "replicasets", "pods", "ingresses"]
   verbs: ["*"]
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: carts-db-rolebinding
+  name: front-end-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: carts-db-role
+  name: front-end-role
 subjects:
   - kind: ServiceAccount
-    name: tekton-sa-carts-db
+    name: tekton-sa-front-end

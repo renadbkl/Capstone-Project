@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: catalogue-db-pipline-run
+spec:
+  pipelineRef:
+    name: catalogue-db-pipline
+  serviceAccountName: tekton-sa-catalogue-db
+  resources:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r 

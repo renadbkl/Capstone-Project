@@ -12,7 +12,7 @@ spec:
       description: The path to the yaml file to deploy within the git source
       default: level-3-project/carts/deploy/carts-db-dep.yaml
     - name: namespace
-      default: test
+      default: prod
   steps:
     - name: run-kubectl
       image: lachlanevenson/k8s-kubectl
