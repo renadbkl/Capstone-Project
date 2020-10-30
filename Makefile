@@ -1,6 +1,6 @@
 .PHONY: up down init cluster-up install uninstall logs repos namespaces cluster-down clean provision
 
-up: cluster-up init docker-creds tekton 
+up: cluster-up init docker-creds install-tekton 
 
 down: cluster-down
 
@@ -8,9 +8,11 @@ docker-creds:
 	docker login
 	kubectl create secret generic basic-user-pass-docker --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json --type=kubernetes.io/dockerconfigjson -n prod
 
-tekton:
+install-tekton:
 	chmod +x tekton-install.sh
 	./tekton-install.sh
+deploy:
+
 
 cluster-down:
 	k3d cluster delete labs
@@ -29,8 +31,6 @@ cluster-up:
 	    --agents 3
 
 init: logs repos namespaces
-platform: install-service-mesh install-ingress install-logging install-monitoring install-secrets
-deplatform: delete-service-mesh delete-ingress delete-logging delete-monitoring delete-secrets
 
 logs:
 	touch output.log
@@ -50,42 +50,6 @@ repos:
 namespaces:
 	kubectl apply -f platform/namespaces
 
-install-cicd:
-	echo "cicd: install" | tee -a output.log
-	kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
-	kubectl apply -f https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
-	kubectl patch svc tekton-dashboard -n tekton-pipelines --type='json' -p '[{"op":"replace", "path":"/spec/type", "value":"NodePort"}]'
-	kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/master/task/git-clone/0.2/git-clone.yaml
-
-delete-cicd:
-	echo "cicd: delete" | tee -a output.log
-	kubectl delete -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
-	kubectl delete -f https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
-
-install-dashboard:
-	echo "Dashboard: install" | tee -a output.log
-	helm install dashboard kubernetes-dashboard/kubernetes-dashboard -n dashboard -f platform/dashboard/values.yaml
-	kubectl patch svc dashboard-kubernetes-dashboard -n dashboard --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"}]'
-
-delete-dashboard:
-	echo "Dashboard: delete" | tee -a output.log
-	helm delete -n dashboard dashboard 2>/dev/null | true
-
-install-service-mesh:
-	echo "Service-Mesh: install" | tee -a output.log
-	helm install consul hashicorp/consul -n service-mesh -f platform/service-mesh/values.yaml | tee -a output.log
-
-delete-service-mesh:
-	echo "Service-Mesh: delete" | tee -a output.log
-	helm delete -n service-mesh consul 2>/dev/null | true
-
-install-secrets:
-	echo "Secrets: install" | tee -a output.log
-	helm install vault hashicorp/vault -n secrets -f platform/secrets/values.yaml | tee -a output.log
-
-delete-secrets:
-	echo "Secrets: delete" | tee -a output.log
-	helm delete -n secrets vault 2>/dev/null | true
 
 install-ingress:
 	echo "Ingress: install" | tee -a output.log
@@ -96,37 +60,53 @@ delete-ingress:
 	echo "Ingress: delete" | tee -a output.log
 	kubectl delete -n ingress -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml | tee -a output.log 2>/dev/null | true
 
-install-monitoring: install-prometheus install-grafana
-delete-monitoring: delete-prometheus delete-grafana
+deploy: front-end carts-db carts catalogue-db catalogue payment orders-db orders user-db user rabbitmq shipping queue-master 
 
-install-prometheus:
-	echo "Monitoring: install-grafana" | tee -a output.log
-	helm install -n monitoring -f platform/monitoring/prometheus-values.yaml prometheus prometheus-community/prometheus| tee -a output.log
 
-delete-prometheus:
-	echo "Monitoring: delete-prometheus" | tee -a output.log
-	helm delete -n monitoring prometheus 2>/dev/null | true
+front-end:
+	kubectl create -f tekton/front-end/sa.yaml -f tekton/front-end/task.yaml -f tekton/front-end/task-dep.yaml -f tekton/front-end/pipresource.yaml -f tekton/front-end/pipline.yaml -f tekton/front-end/piplinerun.yaml -n prod
 
-install-grafana:
-	echo "Monitoring: install-grafana" | tee -a output.log
-	helm install grafana grafana/grafana -n monitoring -f platform/monitoring/grafana-values.yaml | tee -a output.log
+carts-db:
+	kubectl create -f tekton/carts-db/sa.yaml -f tekton/carts-db/task-dep.yaml -f  tekton/carts-db/taskrun-dep.yaml -f tekton/carts-db/pipresource.yaml -n prod
 
-delete-grafana:
-	echo "Monitoring: delete-grafana" | tee -a output.log
-	helm delete -n monitoring grafana 2>/dev/null | true
+carts:	
+	kubectl create -f tekton/carts/sa.yaml -f tekton/carts/task.yaml -f tekton/carts/task-dep.yaml -f tekton/carts/pipresource.yaml -f tekton/carts/pipline.yaml -f tekton/carts/piplinerun.yaml -n prod
 
-install-logging:
-	echo "Logging: install-elasticsearch" | tee -a output.log
-	helm install elasticsearch elastic/elasticsearch -n logging -f platform/logging/elastic-values.yaml | tee -a output.log
-	echo "Logging: install-fluent-bit" | tee -a output.log
-	helm install fluent-bit fluent/fluent-bit -n logging -f platform/logging/fluent-values.yaml | tee -a output.log
-	echo "Logging: install-kibana" | tee -a output.log
-	helm install kibana elastic/kibana -n logging -f platform/logging/kibana-values.yaml | tee -a output.log
+catalogue-db:
+	kubectl create -f tekton/catalogue-db/sa.yaml -f tekton/catalogue-db/task.yaml -f tekton/catalogue-db/task-dep.yaml -f tekton/catalogue-db/pipresource.yaml -f tekton/catalogue-db/pipline.yaml -f tekton/catalogue-db/piplinerun.yaml -n prod
 
-delete-logging:
-	echo "Logging: delete-elasticsearch" | tee -a output.log
-	helm delete elasticsearch -n logging  | tee -a output.log 2>/dev/null | true
-	echo "Logging: delete-elasticsearch" | tee -a output.log
-	helm delete fluent-bit -n logging | tee -a output.log 2>/dev/null | true
-	echo "Logging: delete-elasticsearch" | tee -a output.log
-	helm delete kibana elastic/kibana -n logging | tee -a output.log 2>/dev/null | true
+catalogue:
+	kubectl create -f tekton/catalogue/sa.yaml -f tekton/catalogue/task.yaml -f tekton/catalogue/task-dep.yaml -f tekton/catalogue/pipresource.yaml -f tekton/catalogue/pipline.yaml -f tekton/catalogue/piplinerun.yaml -n prod
+
+payment:
+	kubectl create -f tekton/payment/sa.yaml -f tekton/payment/task.yaml -f tekton/payment/task-dep.yaml -f tekton/payment/pipresource.yaml -f tekton/payment/pipline.yaml -f tekton/payment/piplinerun.yaml -n prod
+
+orders-db:
+	k create -f tekton/orders-db/sa.yaml -f tekton/orders-db/task-dep.yaml -f  tekton/orders-db/taskrun-dep.yaml -f tekton/orders-db/pipresource.yaml -n prod
+
+orders:
+	kubectl create -f tekton/orders/sa.yaml -f tekton/orders/task.yaml -f tekton/orders/task-dep.yaml -f tekton/orders/pipresource.yaml -f tekton/orders/pipline.yaml -f tekton/orders/piplinerun.yaml -n prod
+
+user-db:
+	kubectl create -f tekton/user-db/sa.yaml -f tekton/user-db/task.yaml -f tekton/user-db/task-dep.yaml -f tekton/user-db/pipresource.yaml -f tekton/user-db/pipline.yaml -f tekton/user-db/piplinerun.yaml -n prod
+
+user:
+	kubectl create -f tekton/user/sa.yaml -f tekton/user/task.yaml -f tekton/user/task-dep.yaml -f tekton/user/pipresource.yaml -f tekton/user/pipline.yaml -f tekton/user/piplinerun.yaml -n prod
+
+rabbitmq:
+	k create -f tekton/rabbitmq/sa.yaml -f tekton/rabbitmq/task-dep.yaml -f  tekton/rabbitmq/taskrun-dep.yaml -f tekton/rabbitmq/pipresource.yaml -n prod
+
+shipping:
+	kubectl create -f tekton/shipping/sa.yaml -f tekton/shipping/task.yaml -f tekton/shipping/task-dep.yaml -f tekton/shipping/pipresource.yaml -f tekton/shipping/pipline.yaml -f tekton/shipping/piplinerun.yaml -n prod	
+
+queue-master:
+	kubectl create -f tekton/queue-master/sa.yaml -f tekton/queue-master/task.yaml -f tekton/queue-master/task-dep.yaml -f tekton/queue-master/pipresource.yaml -f tekton/queue-master/pipline.yaml -f tekton/queue-master/piplinerun.yaml -n prod
+
+pro-graf:
+	./pro-graf/pro-graf.sh 	
+
+elf:
+	./elf/elf.sh
+
+complete-demo:
+	
