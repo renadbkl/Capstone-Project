@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: shipping-pipline-run
+spec:
+  pipelineRef:
+    name: shipping-pipline
+  serviceAccountName: tekton-sa-shipping
+  resources:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r 

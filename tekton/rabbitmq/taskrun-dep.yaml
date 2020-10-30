@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: deploy-rabbitmq-taskrun
+spec:
+  serviceAccountName: tekton-sa-rabbitmq
+  taskRef:
+    name: deploy-rabbitmq-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r-rabbitmq

@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: deploy-rabbitmq-task 
+  name: deploy-payment-task 
 spec:
   resources:
     inputs:
@@ -10,7 +10,7 @@ spec:
   params:
     - name: pathToYamlFile
       description: The path to the yaml file to deploy within the git source
-      default: level-3-project/rabbitmq/rmq-dep.yaml
+      default: level-3-project/payment/deploy/payment-dep.yaml
     - name: namespace
       default: prod
   steps:
