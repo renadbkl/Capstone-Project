@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: e2e-js-test-piplinerun
+spec:
+  pipelineRef:
+    name: e2e-js-test-pipline
+  serviceAccountName: tekton-sa-e2e-js-test
+  resources:
+    - name: level-3-project 
+      resourceRef:
+        name: pl-r 

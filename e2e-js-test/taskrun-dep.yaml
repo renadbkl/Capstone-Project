@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: e2e-js-test-taskrun
+spec:
+  serviceAccountName: tekton-sa-e2e-js-test
+  taskRef:
+    name: e2e-js-test-dep-task
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r 
