@@ -1,6 +1,6 @@
 .PHONY: up down init cluster-up install uninstall logs repos namespaces cluster-down clean provision
 
-up: cluster-up init docker-creds install-tekton 
+up: cluster-up init docker-creds install-tekton deploy  
 
 down: cluster-down
 
@@ -109,4 +109,4 @@ elf:
 	./elf/elf.sh
 
 complete-demo:
-	
+	 k apply -f complete-demo.yaml -n test
