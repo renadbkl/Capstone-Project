@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: user-pipline-run
+spec:
+  pipelineRef:
+    name: user-pipline
+  serviceAccountName: tekton-sa-user
+  resources:
+    - name: level-3-project
+      resourceRef:
+        name: pl-r 
