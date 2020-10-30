@@ -3,7 +3,7 @@
   require("./config");
 
   casper.test.begin("User logs in", 3, function suite(test) {
-    casper.start("http://15.185.218.100:30001/", function() {
+    casper.start("http://front-end", function() {
       test.assertNotVisible("#login-modal", "user does not see the login dialogue");
 
       this.clickLabel("Login");
@@ -20,7 +20,7 @@
 
     casper.then(function() {
       this.click("#login-modal form button.btn.btn-primary");
-      this.waitForText("Logged in as Eve Berger", function() {
+      this.waitForText("Logged in as ", function() {
         test.pass("user is logged in");
       }, function() {
         test.fail("user login failed");
