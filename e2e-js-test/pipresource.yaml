@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: pl-r-ete
+  name: pl-r
 spec:
   type: git
   params:

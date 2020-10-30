@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: sock-ete-task
+  name: sock-e2e-js-test-task
   namespace: test
 spec:
   resources:
@@ -11,10 +11,10 @@ spec:
   params:
   - name: IMAGE
     description: Name (reference) of the image to build.
-    default: "renadbkl/e2e-js-test"
+    default: renadbkl/e2e-js-test
   - name: DOCKERFILE
     description: Path to the Dockerfile to build.
-    default: /workspace/level-3-project/ete-js-test/Dockerfile
+    default: /workspace/level-3-project/e2e-js-test/Dockerfile
   - name: CONTEXT
     description: The build context used by Kaniko.
     default: /workspace/level-3-project/e2e-js-test
@@ -28,7 +28,7 @@ spec:
     description: Digest of the image just built.
   steps:
   - name: build-and-push
-    workingDir: /workspace/level-3-project/ete-js-test
+    workingDir: /workspace/level-3-project/e2e-js-test
     image: $(params.BUILDER_IMAGE)
     # specifying DOCKER_CONFIG is required to allow kaniko to detect docker credential
     # https://github.com/tektoncd/pipeline/pull/706

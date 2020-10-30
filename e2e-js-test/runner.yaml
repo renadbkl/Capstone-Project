@@ -1,17 +1,17 @@
 apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
-  name: ete-taskrun
+  name: e2e-js-test-taskrun
   namespace: test
 spec:
-  serviceAccountName: tekton-sa-ete
+  serviceAccountName: tekton-sa-e2e-js-test
   taskRef:
-    name: sock-ete-task
+    name: sock-e2e-js-test-task
   params:
   - name: IMAGE
-    value: "renadbkl/ete-js-test"
+    value: "renadbkl/e2e-js-test"
   resources:
     inputs:
     - name: level-3-project
       resourceRef:
-        name: pl-r-ete
+        name: pl-r
