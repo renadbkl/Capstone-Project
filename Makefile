@@ -85,7 +85,7 @@ payment:
 	kubectl create -f tekton/payment/sa.yaml -f tekton/payment/task.yaml -f tekton/payment/task-dep.yaml -f tekton/payment/pipresource.yaml -f tekton/payment/pipline.yaml -f tekton/payment/piplinerun.yaml -n prod
 
 orders-db:
-	k create -f tekton/orders-db/sa.yaml -f tekton/orders-db/task-dep.yaml -f  tekton/orders-db/taskrun-dep.yaml -f tekton/orders-db/pipresource.yaml -n prod
+	kubectl create -f tekton/orders-db/sa.yaml -f tekton/orders-db/task-dep.yaml -f  tekton/orders-db/taskrun-dep.yaml -f tekton/orders-db/pipresource.yaml -n prod
 
 orders:
 	kubectl create -f tekton/orders/sa.yaml -f tekton/orders/task.yaml -f tekton/orders/task-dep.yaml -f tekton/orders/pipresource.yaml -f tekton/orders/pipline.yaml -f tekton/orders/piplinerun.yaml -n prod
