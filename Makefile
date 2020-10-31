@@ -64,7 +64,7 @@ delete-ingress:
 deploy: front-end carts-db carts catalogue-db catalogue payment orders-db orders user-db user rabbitmq shipping queue-master 
 
 e2e-test:
-	kubectl create -f tekton/e2e-js-test/sa.yaml -f tekton/e2e-js-test/task.yaml -f tekton/e2e-js-test/task-dep.yaml -f tekton/e2e-js-test/pipresource.yaml -f tekton/e2e-js-test/pipline.yaml -f tekton/e2e-js-test/piplinerun.yaml -n prod
+	kubectl create -f tekton/e2e-js-test/sa.yaml -f tekton/e2e-js-test/task.yaml -f tekton/e2e-js-test/task-dep.yaml -f tekton/e2e-js-test/pipresource.yaml -f tekton/e2e-js-test/pipline.yaml -f tekton/e2e-js-test/piplinerun.yaml -n test
 
 front-end:
 	kubectl create -f tekton/front-end/sa.yaml -f tekton/front-end/task.yaml -f tekton/front-end/task-dep.yaml -f tekton/front-end/pipresource.yaml -f tekton/front-end/pipline.yaml -f tekton/front-end/piplinerun.yaml -n prod
