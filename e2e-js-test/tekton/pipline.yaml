@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: e2e-js-test-pipline
+spec:
+  resources:
+    - name: level-3-project 
+      type: git
+  tasks:
+    - name: clone-build 
+      taskRef:
+        name: sock-e2e-js-test-task
+      resources:
+        inputs: 
+        - name: level-3-project
+          resource: level-3-project
+    - name: test
+      runAfter: ["clone-build"]
+      taskRef:
+        name: e2e-js-test-dep-task
+      resources:
+        inputs: 
+        - name: level-3-project
+          resource: level-3-project 

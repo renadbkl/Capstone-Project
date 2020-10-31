@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: e2e-js-test-dep-task
+spec:
+  resources:
+    inputs:
+    - name: level-3-project
+      type: git
+  steps:
+    - name: test
+      image: renadbkl/e2e-js-test 
+      script: |
+        #!/bin/sh
+        cd level-3-project/e2e-js-test
+        rm -rf node_modules package-lock.json
+        npm install
+        npm start
+        source runner.sh

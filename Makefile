@@ -1,6 +1,6 @@
 .PHONY: up down init cluster-up install uninstall logs repos namespaces cluster-down clean provision
 
-up: cluster-up init docker-creds install-tekton deploy  
+up: cluster-up init docker-creds install-tekton deploy e2e-test
 
 down: cluster-down
 
@@ -60,8 +60,11 @@ delete-ingress:
 	echo "Ingress: delete" | tee -a output.log
 	kubectl delete -n ingress -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml | tee -a output.log 2>/dev/null | true
 
+
 deploy: front-end carts-db carts catalogue-db catalogue payment orders-db orders user-db user rabbitmq shipping queue-master 
 
+e2e-test:
+	kubectl create -f tekton/e2e-js-test/sa.yaml -f tekton/e2e-js-test/task.yaml -f tekton/e2e-js-test/task-dep.yaml -f tekton/e2e-js-test/pipresource.yaml -f tekton/e2e-js-test/pipline.yaml -f tekton/e2e-js-test/piplinerun.yaml -n prod
 
 front-end:
 	kubectl create -f tekton/front-end/sa.yaml -f tekton/front-end/task.yaml -f tekton/front-end/task-dep.yaml -f tekton/front-end/pipresource.yaml -f tekton/front-end/pipline.yaml -f tekton/front-end/piplinerun.yaml -n prod
