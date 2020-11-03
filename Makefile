@@ -64,7 +64,7 @@ delete-ingress:
 deploy: front-end carts-db carts catalogue-db catalogue payment orders-db orders user-db user rabbitmq shipping queue-master 
 
 e2e-test:
-	kubectl create -f tekton/e2e-js-test/sa.yaml -f tekton/e2e-js-test/task.yaml -f tekton/e2e-js-test/task-dep.yaml -f tekton/e2e-js-test/pipresource.yaml -f tekton/e2e-js-test/pipline.yaml -f tekton/e2e-js-test/piplinerun.yaml -n prod
+	kubectl create -f tekton/e2e-js-test/sa.yaml -f tekton/e2e-js-test/task.yaml -f tekton/e2e-js-test/task-dep.yaml -f tekton/e2e-js-test/pipresource.yaml -f tekton/e2e-js-test/pipline.yaml -f tekton/e2e-js-test/piplinerun.yaml -n test
 
 front-end:
 	kubectl create -f tekton/front-end/sa.yaml -f tekton/front-end/task.yaml -f tekton/front-end/task-dep.yaml -f tekton/front-end/pipresource.yaml -f tekton/front-end/pipline.yaml -f tekton/front-end/piplinerun.yaml -n prod
@@ -85,7 +85,7 @@ payment:
 	kubectl create -f tekton/payment/sa.yaml -f tekton/payment/task.yaml -f tekton/payment/task-dep.yaml -f tekton/payment/pipresource.yaml -f tekton/payment/pipline.yaml -f tekton/payment/piplinerun.yaml -n prod
 
 orders-db:
-	k create -f tekton/orders-db/sa.yaml -f tekton/orders-db/task-dep.yaml -f  tekton/orders-db/taskrun-dep.yaml -f tekton/orders-db/pipresource.yaml -n prod
+	kubectl create -f tekton/orders-db/sa.yaml -f tekton/orders-db/task-dep.yaml -f  tekton/orders-db/taskrun-dep.yaml -f tekton/orders-db/pipresource.yaml -n prod
 
 orders:
 	kubectl create -f tekton/orders/sa.yaml -f tekton/orders/task.yaml -f tekton/orders/task-dep.yaml -f tekton/orders/pipresource.yaml -f tekton/orders/pipline.yaml -f tekton/orders/piplinerun.yaml -n prod
