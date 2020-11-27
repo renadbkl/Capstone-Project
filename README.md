@@ -1,4 +1,4 @@
-# level-3-project
+# DevOps bootcamp level-3-project
 
 to run the whole project:
 make up
